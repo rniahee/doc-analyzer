@@ -60,7 +60,26 @@ export function AnalysisForm({ onResult, onLoadingChange }: AnalysisFormProps) {
   });
 
   async function onSubmit(data: FormValues) {
-    console.log(data);
+    onLoadingChange(true)
+    try {
+      const formData = new FormData()
+      formData.append('file', data.file[0])
+      formData.append('purpose', data.purpose)
+      formData.append('length', data.length)
+      formData.append('scope', JSON.stringify(data.scope))
+      if (data.audience) formData.append('audience', data.audience)
+      if (data.language) formData.append('language', data.language)
+      if (data.additionalRequest) formData.append('additionalRequest', data.additionalRequest)
+
+      const res = await fetch('/api/analyze', { method: 'POST', body: formData })
+      if (!res.ok) throw new Error((await res.json()).error ?? '분석에 실패했습니다.')
+      const json = await res.json()
+      onResult(json.result)
+    } catch (e) {
+      onResult(e instanceof Error ? e.message : '알 수 없는 오류가 발생했습니다.')
+    } finally {
+      onLoadingChange(false)
+    }
   }
 
   return (
