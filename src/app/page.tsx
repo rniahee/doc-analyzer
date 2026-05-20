@@ -2,6 +2,7 @@
 
 import { useState } from 'react';
 import { AnalysisForm } from '@/components/AnalysisForm';
+import { ResultPanel } from '@/components/ResultPanel';
 
 export default function Home() {
   const [result, setResult] = useState<string | null>(null);
@@ -19,18 +20,8 @@ export default function Home() {
         <AnalysisForm onResult={handleResult} onLoadingChange={setIsLoading} />
       </section>
 
-      <section className="w-1/2 overflow-y-auto p-8 bg-neutral-50 flex items-center justify-center">
-        {isLoading && <p className="text-sm text-neutral-400">분석 중...</p>}
-        {!isLoading && result && (
-          <pre className="w-full text-sm text-neutral-800 whitespace-pre-wrap">
-            {result}
-          </pre>
-        )}
-        {!isLoading && !result && (
-          <p className="text-sm text-neutral-400">
-            분석 결과가 여기에 표시됩니다.
-          </p>
-        )}
+      <section className="w-1/2 overflow-y-auto p-8 bg-neutral-50">
+        <ResultPanel result={result} isLoading={isLoading} />
       </section>
     </main>
   );
