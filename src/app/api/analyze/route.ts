@@ -35,7 +35,9 @@ export async function POST(request: Request) {
     return Response.json({ result })
   } catch (e) {
     console.error('[/api/analyze]', e)
-    const message = e instanceof Error ? e.message : '알 수 없는 오류'
+    const message = e instanceof Error && e.message.includes('지원하지 않는 파일')
+      ? e.message
+      : '분석 중 오류가 발생했습니다. 잠시 후 다시 시도해 주세요.'
     return Response.json({ error: message }, { status: 500 })
   }
 }
