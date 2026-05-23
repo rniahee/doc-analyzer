@@ -4,10 +4,11 @@ import { Button } from '@/components/ui/Button'
 
 type ResultPanelProps = {
   result: string | null
+  error: string | null
   isLoading: boolean
 }
 
-export function ResultPanel({ result, isLoading }: ResultPanelProps) {
+export function ResultPanel({ result, error, isLoading }: ResultPanelProps) {
   function handleCopy() {
     if (result) navigator.clipboard.writeText(result)
   }
@@ -27,6 +28,17 @@ export function ResultPanel({ result, isLoading }: ResultPanelProps) {
     return (
       <div className="flex items-center justify-center h-full">
         <p className="text-sm text-neutral-400">분석 중...</p>
+      </div>
+    )
+  }
+
+  if (error) {
+    return (
+      <div className="flex items-center justify-center h-full">
+        <div className="flex flex-col items-center gap-2 max-w-sm text-center">
+          <p className="text-sm font-medium text-red-600">오류가 발생했습니다</p>
+          <p className="text-sm text-red-500">{error}</p>
+        </div>
       </div>
     )
   }

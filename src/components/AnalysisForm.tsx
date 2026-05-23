@@ -26,6 +26,7 @@ type FormValues = {
 
 type AnalysisFormProps = {
   onResult: (result: string) => void;
+  onError: (error: string) => void;
   onLoadingChange: (loading: boolean) => void;
 };
 
@@ -44,7 +45,7 @@ function FieldLabel({
   );
 }
 
-export function AnalysisForm({ onResult, onLoadingChange }: AnalysisFormProps) {
+export function AnalysisForm({ onResult, onError, onLoadingChange }: AnalysisFormProps) {
   const {
     register,
     control,
@@ -76,7 +77,7 @@ export function AnalysisForm({ onResult, onLoadingChange }: AnalysisFormProps) {
       const json = await res.json()
       onResult(json.result)
     } catch (e) {
-      onResult(e instanceof Error ? e.message : '알 수 없는 오류가 발생했습니다.')
+      onError(e instanceof Error ? e.message : '알 수 없는 오류가 발생했습니다.')
     } finally {
       onLoadingChange(false)
     }
