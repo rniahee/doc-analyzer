@@ -10,9 +10,10 @@ type RadioGroupProps = {
   value: string
   onChange: (value: string) => void
   error?: string
+  disabled?: boolean
 }
 
-export function RadioGroup({ name, options, value, onChange, error }: RadioGroupProps) {
+export function RadioGroup({ name, options, value, onChange, error, disabled }: RadioGroupProps) {
   return (
     <div>
       <div className="flex flex-wrap gap-2">
@@ -24,6 +25,7 @@ export function RadioGroup({ name, options, value, onChange, error }: RadioGroup
             value={opt.value}
             checked={value === opt.value}
             onChange={() => onChange(opt.value)}
+            disabled={disabled}
           />
         ))}
       </div>

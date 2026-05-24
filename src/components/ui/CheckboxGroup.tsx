@@ -9,9 +9,10 @@ type CheckboxGroupProps = {
   value: string[]
   onChange: (value: string[]) => void
   error?: string
+  disabled?: boolean
 }
 
-export function CheckboxGroup({ options, value, onChange, error }: CheckboxGroupProps) {
+export function CheckboxGroup({ options, value, onChange, error, disabled }: CheckboxGroupProps) {
   function toggle(optValue: string, checked: boolean) {
     onChange(
       checked
@@ -30,6 +31,7 @@ export function CheckboxGroup({ options, value, onChange, error }: CheckboxGroup
             value={opt.value}
             checked={value.includes(opt.value)}
             onChange={(checked) => toggle(opt.value, checked)}
+            disabled={disabled}
           />
         ))}
       </div>

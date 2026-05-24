@@ -7,7 +7,7 @@ type FileInputProps = Omit<InputHTMLAttributes<HTMLInputElement>, 'type'> & {
 }
 
 export const FileInput = forwardRef<HTMLInputElement, FileInputProps>(
-  function FileInput({ onChange, error, ...props }, ref) {
+  function FileInput({ onChange, error, disabled, ...props }, ref) {
     const [filename, setFilename] = useState<string | null>(null)
 
     function handleChange(e: ChangeEvent<HTMLInputElement>) {
@@ -17,7 +17,7 @@ export const FileInput = forwardRef<HTMLInputElement, FileInputProps>(
 
     return (
       <div>
-        <label className="flex flex-col items-center justify-center w-full h-32 border-2 border-dashed border-neutral-300 rounded-lg cursor-pointer hover:border-neutral-400 hover:bg-neutral-50 transition-colors">
+        <label className={`flex flex-col items-center justify-center w-full h-32 border-2 border-dashed border-neutral-300 rounded-lg transition-colors ${disabled ? 'cursor-not-allowed opacity-50' : 'cursor-pointer hover:border-neutral-400 hover:bg-neutral-50'}`}>
           <svg
             className="mb-2 w-6 h-6 text-neutral-400"
             xmlns="http://www.w3.org/2000/svg"
@@ -37,6 +37,7 @@ export const FileInput = forwardRef<HTMLInputElement, FileInputProps>(
             ref={ref}
             onChange={handleChange}
             accept=".pdf,.docx,.txt"
+            disabled={disabled}
             {...props}
           />
         </label>
