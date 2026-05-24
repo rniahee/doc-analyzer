@@ -90,6 +90,7 @@ export function AnalysisForm({ onResult, onError, onLoadingChange }: AnalysisFor
         <FileInput
           {...register('file', { required: '파일을 선택해 주세요.' })}
           error={errors.file?.message}
+          disabled={isSubmitting}
         />
       </div>
 
@@ -106,6 +107,7 @@ export function AnalysisForm({ onResult, onError, onLoadingChange }: AnalysisFor
               value={field.value ?? ''}
               onChange={field.onChange}
               error={errors.purpose?.message}
+              disabled={isSubmitting}
             />
           )}
         />
@@ -124,6 +126,7 @@ export function AnalysisForm({ onResult, onError, onLoadingChange }: AnalysisFor
               value={field.value ?? ''}
               onChange={field.onChange}
               error={errors.length?.message}
+              disabled={isSubmitting}
             />
           )}
         />
@@ -144,6 +147,7 @@ export function AnalysisForm({ onResult, onError, onLoadingChange }: AnalysisFor
               value={field.value}
               onChange={field.onChange}
               error={errors.scope?.message}
+              disabled={isSubmitting}
             />
           )}
         />
@@ -162,6 +166,7 @@ export function AnalysisForm({ onResult, onError, onLoadingChange }: AnalysisFor
               options={AUDIENCE_OPTIONS}
               value={field.value ?? ''}
               onChange={field.onChange}
+              disabled={isSubmitting}
             />
           )}
         />
@@ -178,6 +183,7 @@ export function AnalysisForm({ onResult, onError, onLoadingChange }: AnalysisFor
               options={LANGUAGE_OPTIONS}
               value={field.value ?? ''}
               onChange={field.onChange}
+              disabled={isSubmitting}
             />
           )}
         />
@@ -188,6 +194,7 @@ export function AnalysisForm({ onResult, onError, onLoadingChange }: AnalysisFor
         <Textarea
           {...register('additionalRequest')}
           placeholder="자유롭게 입력하세요."
+          disabled={isSubmitting}
         />
       </div>
 
