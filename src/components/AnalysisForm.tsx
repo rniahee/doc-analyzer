@@ -88,7 +88,17 @@ export function AnalysisForm({ onResult, onError, onLoadingChange }: AnalysisFor
       <div className="flex flex-col gap-2">
         <FieldLabel label="파일 업로드" required />
         <FileInput
-          {...register('file', { required: '파일을 선택해 주세요.' })}
+          {...register('file', {
+            required: '파일을 선택해 주세요.',
+            validate: {
+              type: (files) => {
+                const allowed = ['application/pdf', 'application/vnd.openxmlformats-officedocument.wordprocessingml.document', 'text/plain']
+                return allowed.includes(files[0]?.type) || 'PDF, DOCX, TXT 파일만 업로드할 수 있습니다.'
+              },
+              size: (files) =>
+                files[0]?.size > 0 || '파일 내용이 비어 있습니다.',
+            },
+          })}
           error={errors.file?.message}
           disabled={isSubmitting}
         />
