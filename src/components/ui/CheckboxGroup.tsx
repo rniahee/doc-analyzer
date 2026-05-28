@@ -1,8 +1,7 @@
 'use client'
 
 import { Checkbox } from './Checkbox'
-
-type Option = { label: string; value: string }
+import type { Option } from '@/lib/options'
 
 type CheckboxGroupProps = {
   options: Option[]

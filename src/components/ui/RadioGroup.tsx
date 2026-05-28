@@ -1,8 +1,7 @@
 'use client'
 
 import { Radio } from './Radio'
-
-type Option = { label: string; value: string }
+import type { Option } from '@/lib/options'
 
 type RadioGroupProps = {
   name: string
