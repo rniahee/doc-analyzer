@@ -1,11 +1,9 @@
 import { PDFParse } from 'pdf-parse';
 import mammoth from 'mammoth';
-
-const SUPPORTED_TYPES = ['application/pdf', 'application/vnd.openxmlformats-officedocument.wordprocessingml.document', 'text/plain'] as const;
-type SupportedMimeType = typeof SUPPORTED_TYPES[number];
+import { SUPPORTED_MIME_TYPES, type SupportedMimeType } from './options';
 
 function isSupportedType(mimeType: string): mimeType is SupportedMimeType {
-  return (SUPPORTED_TYPES as readonly string[]).includes(mimeType);
+  return (SUPPORTED_MIME_TYPES as readonly string[]).includes(mimeType);
 }
 
 export async function parseFile(buffer: Buffer, mimeType: string): Promise<string> {

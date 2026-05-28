@@ -1,5 +1,13 @@
 export type Option = { label: string; value: string };
 
+export const SUPPORTED_MIME_TYPES = [
+  'application/pdf',
+  'application/vnd.openxmlformats-officedocument.wordprocessingml.document',
+  'text/plain',
+] as const;
+
+export type SupportedMimeType = typeof SUPPORTED_MIME_TYPES[number];
+
 export const PURPOSE_OPTIONS: Option[] = [
   { label: '전체 내용 파악', value: 'overview' },
   { label: '핵심만 빠르게', value: 'quick' },

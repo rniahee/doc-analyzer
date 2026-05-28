@@ -12,6 +12,7 @@ import {
   SCOPE_OPTIONS,
   AUDIENCE_OPTIONS,
   LANGUAGE_OPTIONS,
+  SUPPORTED_MIME_TYPES,
 } from '@/lib/options';
 
 type FormValues = {
@@ -91,10 +92,8 @@ export function AnalysisForm({ onResult, onError, onLoadingChange }: AnalysisFor
           {...register('file', {
             required: '파일을 선택해 주세요.',
             validate: {
-              type: (files) => {
-                const allowed = ['application/pdf', 'application/vnd.openxmlformats-officedocument.wordprocessingml.document', 'text/plain']
-                return allowed.includes(files[0]?.type) || 'PDF, DOCX, TXT 파일만 업로드할 수 있습니다.'
-              },
+              type: (files) =>
+                (SUPPORTED_MIME_TYPES as readonly string[]).includes(files[0]?.type) || 'PDF, DOCX, TXT 파일만 업로드할 수 있습니다.',
               size: (files) =>
                 files[0]?.size > 0 || '파일 내용이 비어 있습니다.',
             },
