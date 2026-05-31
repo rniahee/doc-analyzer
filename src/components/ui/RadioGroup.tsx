@@ -1,7 +1,7 @@
 'use client'
 
-import { Radio } from './Radio'
 import type { Option } from '@/lib/options'
+import { Radio } from './Radio'
 
 type RadioGroupProps = {
   name: string
