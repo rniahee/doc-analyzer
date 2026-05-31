@@ -1,5 +1,6 @@
 'use client'
 
+import { useState } from 'react'
 import { Button } from '@/components/ui/Button'
 
 type ResultPanelProps = {
@@ -9,8 +10,18 @@ type ResultPanelProps = {
 }
 
 export function ResultPanel({ result, error, isLoading }: ResultPanelProps) {
-  function handleCopy() {
-    if (result) navigator.clipboard.writeText(result)
+  const [copyStatus, setCopyStatus] = useState<'idle' | 'success' | 'error'>('idle')
+
+  async function handleCopy() {
+    if (!result) return
+    try {
+      await navigator.clipboard.writeText(result)
+      setCopyStatus('success')
+    } catch {
+      setCopyStatus('error')
+    } finally {
+      setTimeout(() => setCopyStatus('idle'), 2000)
+    }
   }
 
   function handleDownload() {
@@ -54,7 +65,9 @@ export function ResultPanel({ result, error, isLoading }: ResultPanelProps) {
   return (
     <div className="flex flex-col h-full gap-4">
       <div className="flex justify-end gap-2">
-        <Button variant="secondary" onClick={handleCopy}>복사</Button>
+        <Button variant="secondary" onClick={handleCopy}>
+          {copyStatus === 'success' ? '복사됨 ✓' : copyStatus === 'error' ? '복사 실패' : '복사'}
+        </Button>
         <Button variant="secondary" onClick={handleDownload}>다운로드</Button>
       </div>
       <pre className="flex-1 overflow-y-auto text-sm text-neutral-800 whitespace-pre-wrap leading-relaxed">
