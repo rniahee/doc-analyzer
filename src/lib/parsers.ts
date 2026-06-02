@@ -6,7 +6,10 @@ function isSupportedType(mimeType: string): mimeType is SupportedMimeType {
   return (SUPPORTED_MIME_TYPES as readonly string[]).includes(mimeType);
 }
 
-export async function parseFile(buffer: Buffer, mimeType: string): Promise<string> {
+export async function parseFile(
+  buffer: Buffer,
+  mimeType: string,
+): Promise<string> {
   if (!isSupportedType(mimeType)) {
     throw new Error(`지원하지 않는 파일 형식입니다: ${mimeType}`);
   }
