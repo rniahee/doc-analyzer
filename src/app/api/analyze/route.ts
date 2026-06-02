@@ -1,26 +1,35 @@
-import { parseFile } from '@/lib/parsers'
-import { buildPrompt, analyzeWithGemini } from '@/lib/gemini'
+import { parseFile } from '@/lib/parsers';
+import { buildPrompt, analyzeWithGemini } from '@/lib/gemini';
 
 export async function POST(request: Request) {
-  const formData = await request.formData()
+  const formData = await request.formData();
 
-  const file = formData.get('file')
-  const purpose = formData.get('purpose')
-  const length = formData.get('length')
-  const scopeRaw = formData.get('scope')
+  const file = formData.get('file');
+  const purpose = formData.get('purpose');
+  const length = formData.get('length');
+  const scopeRaw = formData.get('scope');
+  const audience = formData.get('audience') as string | null;
+  const language = formData.get('language') as string | null;
+  const additionalRequest = formData.get('additionalRequest') as string | null;
 
   if (!(file instanceof File) || !purpose || !length || !scopeRaw) {
-    return Response.json({ error: '필수 항목이 누락됐습니다.' }, { status: 400 })
+    return Response.json(
+      { error: '필수 항목이 누락됐습니다.' },
+      { status: 400 },
+    );
   }
 
-  const scope: string[] = JSON.parse(scopeRaw as string)
-  const audience = formData.get('audience') as string | null
-  const language = formData.get('language') as string | null
-  const additionalRequest = formData.get('additionalRequest') as string | null
+  let scope: string[];
+  try {
+    scope = JSON.parse(scopeRaw as string);
+    if (!Array.isArray(scope)) throw new Error();
+  } catch {
+    return Response.json({ error: '잘못된 요청입니다.' }, { status: 400 });
+  }
 
   try {
-    const buffer = Buffer.from(await file.arrayBuffer())
-    const text = await parseFile(buffer, file.type)
+    const buffer = Buffer.from(await file.arrayBuffer());
+    const text = await parseFile(buffer, file.type);
 
     const prompt = buildPrompt(text, {
       purpose: purpose as string,
@@ -29,15 +38,16 @@ export async function POST(request: Request) {
       ...(audience && { audience }),
       ...(language && { language }),
       ...(additionalRequest && { additionalRequest }),
-    })
+    });
 
-    const result = await analyzeWithGemini(prompt)
-    return Response.json({ result })
+    const result = await analyzeWithGemini(prompt);
+    return Response.json({ result });
   } catch (e) {
-    console.error('[/api/analyze]', e)
-    const message = e instanceof Error && e.message.includes('지원하지 않는 파일')
-      ? e.message
-      : '분석 중 오류가 발생했습니다. 잠시 후 다시 시도해 주세요.'
-    return Response.json({ error: message }, { status: 500 })
+    console.error('[/api/analyze]', e);
+    const message =
+      e instanceof Error && e.message.includes('지원하지 않는 파일')
+        ? e.message
+        : '분석 중 오류가 발생했습니다. 잠시 후 다시 시도해 주세요.';
+    return Response.json({ error: message }, { status: 500 });
   }
 }
