@@ -23,7 +23,11 @@ export default function Home() {
     <main className="flex h-screen">
       <section className="w-1/2 border-r border-neutral-200 overflow-y-auto p-8">
         <h1 className="text-xl font-bold text-neutral-900 mb-6">문서 분석기</h1>
-        <AnalysisForm onResult={handleResult} onError={handleError} onLoadingChange={setIsLoading} />
+        <AnalysisForm
+          onResult={handleResult}
+          onError={handleError}
+          onLoadingChange={setIsLoading}
+        />
       </section>
 
       <section className="w-1/2 overflow-y-auto p-8 bg-neutral-50">

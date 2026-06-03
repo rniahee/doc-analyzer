@@ -46,7 +46,11 @@ function FieldLabel({
   );
 }
 
-export function AnalysisForm({ onResult, onError, onLoadingChange }: AnalysisFormProps) {
+export function AnalysisForm({
+  onResult,
+  onError,
+  onLoadingChange,
+}: AnalysisFormProps) {
   const {
     register,
     control,
@@ -62,25 +66,32 @@ export function AnalysisForm({ onResult, onError, onLoadingChange }: AnalysisFor
   });
 
   async function onSubmit(data: FormValues) {
-    onLoadingChange(true)
+    onLoadingChange(true);
     try {
-      const formData = new FormData()
-      formData.append('file', data.file[0])
-      formData.append('purpose', data.purpose)
-      formData.append('length', data.length)
-      formData.append('scope', JSON.stringify(data.scope))
-      if (data.audience) formData.append('audience', data.audience)
-      if (data.language) formData.append('language', data.language)
-      if (data.additionalRequest) formData.append('additionalRequest', data.additionalRequest)
+      const formData = new FormData();
+      formData.append('file', data.file[0]);
+      formData.append('purpose', data.purpose);
+      formData.append('length', data.length);
+      formData.append('scope', JSON.stringify(data.scope));
+      if (data.audience) formData.append('audience', data.audience);
+      if (data.language) formData.append('language', data.language);
+      if (data.additionalRequest)
+        formData.append('additionalRequest', data.additionalRequest);
 
-      const res = await fetch('/api/analyze', { method: 'POST', body: formData })
-      if (!res.ok) throw new Error((await res.json()).error ?? '분석에 실패했습니다.')
-      const json = await res.json()
-      onResult(json.result)
+      const res = await fetch('/api/analyze', {
+        method: 'POST',
+        body: formData,
+      });
+      if (!res.ok)
+        throw new Error((await res.json()).error ?? '분석에 실패했습니다.');
+      const json = await res.json();
+      onResult(json.result);
     } catch (e) {
-      onError(e instanceof Error ? e.message : '알 수 없는 오류가 발생했습니다.')
+      onError(
+        e instanceof Error ? e.message : '알 수 없는 오류가 발생했습니다.',
+      );
     } finally {
-      onLoadingChange(false)
+      onLoadingChange(false);
     }
   }
 
@@ -93,7 +104,9 @@ export function AnalysisForm({ onResult, onError, onLoadingChange }: AnalysisFor
             required: '파일을 선택해 주세요.',
             validate: {
               type: (files) =>
-                (SUPPORTED_MIME_TYPES as readonly string[]).includes(files[0]?.type) || 'PDF, DOCX, TXT 파일만 업로드할 수 있습니다.',
+                (SUPPORTED_MIME_TYPES as readonly string[]).includes(
+                  files[0]?.type,
+                ) || 'PDF, DOCX, TXT 파일만 업로드할 수 있습니다.',
               size: (files) =>
                 files[0]?.size > 0 || '파일 내용이 비어 있습니다.',
             },

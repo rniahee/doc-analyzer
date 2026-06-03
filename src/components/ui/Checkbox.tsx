@@ -1,16 +1,22 @@
-'use client'
+'use client';
 
-import { getToggleItemClassName } from './utils'
+import { getToggleItemClassName } from './utils';
 
 type CheckboxProps = {
-  label: string
-  value: string
-  checked: boolean
-  onChange: (checked: boolean) => void
-  disabled?: boolean
-}
+  label: string;
+  value: string;
+  checked: boolean;
+  onChange: (checked: boolean) => void;
+  disabled?: boolean;
+};
 
-export function Checkbox({ label, value, checked, onChange, disabled }: CheckboxProps) {
+export function Checkbox({
+  label,
+  value,
+  checked,
+  onChange,
+  disabled,
+}: CheckboxProps) {
   return (
     <label className={getToggleItemClassName(checked, disabled)}>
       <input
@@ -23,5 +29,5 @@ export function Checkbox({ label, value, checked, onChange, disabled }: Checkbox
       />
       {label}
     </label>
-  )
+  );
 }

@@ -6,7 +6,7 @@ export const SUPPORTED_MIME_TYPES = [
   'text/plain',
 ] as const;
 
-export type SupportedMimeType = typeof SUPPORTED_MIME_TYPES[number];
+export type SupportedMimeType = (typeof SUPPORTED_MIME_TYPES)[number];
 
 export const PURPOSE_OPTIONS: Option[] = [
   { label: '전체 내용 파악', value: 'overview' },

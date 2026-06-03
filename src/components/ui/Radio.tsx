@@ -1,17 +1,24 @@
-'use client'
+'use client';
 
-import { getToggleItemClassName } from './utils'
+import { getToggleItemClassName } from './utils';
 
 type RadioProps = {
-  label: string
-  value: string
-  name: string
-  checked: boolean
-  onChange: () => void
-  disabled?: boolean
-}
+  label: string;
+  value: string;
+  name: string;
+  checked: boolean;
+  onChange: () => void;
+  disabled?: boolean;
+};
 
-export function Radio({ label, value, name, checked, onChange, disabled }: RadioProps) {
+export function Radio({
+  label,
+  value,
+  name,
+  checked,
+  onChange,
+  disabled,
+}: RadioProps) {
   return (
     <label className={getToggleItemClassName(checked, disabled)}>
       <input
@@ -25,5 +32,5 @@ export function Radio({ label, value, name, checked, onChange, disabled }: Radio
       />
       {label}
     </label>
-  )
+  );
 }

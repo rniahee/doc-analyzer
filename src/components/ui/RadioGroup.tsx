@@ -1,18 +1,25 @@
-'use client'
+'use client';
 
-import type { Option } from '@/lib/options'
-import { Radio } from './Radio'
+import type { Option } from '@/lib/options';
+import { Radio } from './Radio';
 
 type RadioGroupProps = {
-  name: string
-  options: Option[]
-  value: string
-  onChange: (value: string) => void
-  error?: string
-  disabled?: boolean
-}
+  name: string;
+  options: Option[];
+  value: string;
+  onChange: (value: string) => void;
+  error?: string;
+  disabled?: boolean;
+};
 
-export function RadioGroup({ name, options, value, onChange, error, disabled }: RadioGroupProps) {
+export function RadioGroup({
+  name,
+  options,
+  value,
+  onChange,
+  error,
+  disabled,
+}: RadioGroupProps) {
   return (
     <div>
       <div className="flex flex-wrap gap-2">
@@ -30,5 +37,5 @@ export function RadioGroup({ name, options, value, onChange, error, disabled }: 
       </div>
       {error && <p className="mt-1 text-xs text-red-500">{error}</p>}
     </div>
-  )
+  );
 }

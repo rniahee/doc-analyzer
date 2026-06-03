@@ -1,23 +1,27 @@
-'use client'
+'use client';
 
-import type { Option } from '@/lib/options'
-import { Checkbox } from './Checkbox'
+import type { Option } from '@/lib/options';
+import { Checkbox } from './Checkbox';
 
 type CheckboxGroupProps = {
-  options: Option[]
-  value: string[]
-  onChange: (value: string[]) => void
-  error?: string
-  disabled?: boolean
-}
+  options: Option[];
+  value: string[];
+  onChange: (value: string[]) => void;
+  error?: string;
+  disabled?: boolean;
+};
 
-export function CheckboxGroup({ options, value, onChange, error, disabled }: CheckboxGroupProps) {
+export function CheckboxGroup({
+  options,
+  value,
+  onChange,
+  error,
+  disabled,
+}: CheckboxGroupProps) {
   function toggle(optValue: string, checked: boolean) {
     onChange(
-      checked
-        ? [...value, optValue]
-        : value.filter((v) => v !== optValue)
-    )
+      checked ? [...value, optValue] : value.filter((v) => v !== optValue),
+    );
   }
 
   return (
@@ -36,5 +40,5 @@ export function CheckboxGroup({ options, value, onChange, error, disabled }: Che
       </div>
       {error && <p className="mt-1 text-xs text-red-500">{error}</p>}
     </div>
-  )
+  );
 }

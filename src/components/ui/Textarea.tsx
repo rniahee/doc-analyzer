@@ -1,8 +1,8 @@
-import { forwardRef, type TextareaHTMLAttributes } from 'react'
+import { forwardRef, type TextareaHTMLAttributes } from 'react';
 
 type TextareaProps = TextareaHTMLAttributes<HTMLTextAreaElement> & {
-  error?: string
-}
+  error?: string;
+};
 
 export const Textarea = forwardRef<HTMLTextAreaElement, TextareaProps>(
   function Textarea({ error, className = '', ...props }, ref) {
@@ -16,6 +16,6 @@ export const Textarea = forwardRef<HTMLTextAreaElement, TextareaProps>(
         />
         {error && <p className="mt-1 text-xs text-red-500">{error}</p>}
       </div>
-    )
-  }
-)
+    );
+  },
+);
