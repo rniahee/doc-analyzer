@@ -82,9 +82,8 @@ export function AnalysisForm({
         method: 'POST',
         body: formData,
       });
-      if (!res.ok)
-        throw new Error((await res.json()).error ?? '분석에 실패했습니다.');
       const json = await res.json();
+      if (!res.ok) throw new Error(json.error ?? '분석에 실패했습니다.');
       onResult(json.result);
     } catch (e) {
       onError(
@@ -107,8 +106,12 @@ export function AnalysisForm({
                 (SUPPORTED_MIME_TYPES as readonly string[]).includes(
                   files[0]?.type,
                 ) || 'PDF, DOCX, TXT 파일만 업로드할 수 있습니다.',
-              size: (files) =>
-                files[0]?.size > 0 || '파일 내용이 비어 있습니다.',
+              size: (files) => {
+                if (files[0]?.size === 0) return '파일 내용이 비어 있습니다.';
+                if (files[0]?.size > 10 * 1024 * 1024)
+                  return '10MB 이하의 파일만 업로드할 수 있습니다.';
+                return true;
+              },
             },
           })}
           error={errors.file?.message}
