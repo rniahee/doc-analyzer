@@ -33,7 +33,9 @@ export function ResultPanel({ result, error, isLoading }: ResultPanelProps) {
     const a = document.createElement('a');
     a.href = url;
     a.download = 'analysis.md';
+    document.body.appendChild(a);
     a.click();
+    document.body.removeChild(a);
     URL.revokeObjectURL(url);
   }
 
