@@ -40,14 +40,14 @@ export const FileInput = forwardRef<HTMLInputElement, FileInputProps>(
             />
           </svg>
           <span className="text-sm text-neutral-500">
-            {filename ?? 'PDF, DOCX, TXT 파일을 선택하세요'}
+            {filename ?? 'PDF, DOCX, XLSX, TXT 파일을 선택하세요'}
           </span>
           <input
             type="file"
             className="hidden"
             ref={ref}
             onChange={handleChange}
-            accept=".pdf,.docx,.txt"
+            accept=".pdf,.docx,.xlsx,.txt"
             disabled={disabled}
             {...props}
           />
